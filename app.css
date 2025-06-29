@@ -1,0 +1,715 @@
+npm run start-dev/* ===================== RESET ===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===================== BASE ===================== */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #1f1c1c;
+  color: #ffffff;
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 1300px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  width: 100%;
+}
+
+/* ===================== HEADER ===================== */
+header {
+  background-color: #735557;
+  color: white;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+}
+
+.main-header {
+  min-height: 90px;
+  padding-block: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.brand-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-name i {
+  color: #fff;
+}
+
+/* ===================== NAVIGATION DRAWER ===================== */
+.navigation-drawer {
+  display: none;
+  flex-direction: column;
+  background-color: #2a2a2a;
+  position: absolute;
+  top: 90px;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  z-index: 1000;
+  transition: max-height 0.3s ease-in-out;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.navigation-drawer.open {
+  display: flex;
+  max-height: 500px; /* pastikan max-height cukup untuk muat semua menu */
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.nav-list li a {
+  padding: 0.75rem 1.25rem;
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-list li a:hover,
+.nav-list li a:focus,
+.nav-list li a[aria-current='page'] {
+  background: transparent;
+  color: #ffdee0;
+  text-decoration: underline;
+  outline: none;
+}
+
+/* Hamburger Button */
+.drawer-button {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: white;
+  cursor: pointer;
+}
+
+.drawer-button:focus {
+  outline: 2px dashed #ffdee0;
+  outline-offset: 4px;
+}
+
+/* Skip Link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #735557;
+  color: #fff;
+  padding: 8px;
+  z-index: 100;
+  text-decoration: none;
+  font-weight: 600;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ===================== MAIN CONTENT ===================== */
+.main-content {
+  flex-grow: 1;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem 1.5rem;
+}
+
+.main-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+/* ===================== STORY LIST ===================== */
+.story-list,
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 600px) {
+  .story-list,
+  .story-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .story-list,
+  .story-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .story-list,
+  .story-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.story-card,
+.story-item {
+  background: #2a2a2a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  outline-offset: 3px;
+}
+
+.story-card:hover,
+.story-item:hover,
+.story-card:focus,
+.story-item:focus {
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(255, 222, 224, 0.6);
+  outline: none;
+}
+
+.story-card img,
+.story-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.story-info {
+  padding: 0.75rem 0 0 0;
+  flex-grow: 1;
+}
+
+.story-info h3 {
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+  color: #ffdee0;
+}
+
+.story-info p {
+  font-size: 0.8rem;
+  color: #e0e0e0;
+  margin-bottom: 0.5rem;
+}
+
+/* Tanggal story */
+.story-item small {
+  font-size: 0.75rem;
+  color: #bbb;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+/* Container peta */
+.story-map {
+  height: 200px;
+  border-radius: 8px;
+  background-color: #444; /* fallback warna */
+  overflow: hidden;
+}
+
+/* Fokus aksesibilitas untuk keyboard */
+.story-item:focus-visible {
+  outline: 3px solid #ffdee0;
+  outline-offset: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .story-card img,
+  .story-item img {
+    height: 130px;
+  }
+}
+
+/* Load More Button */
+.load-more-btn {
+  display: block;
+  margin: 2rem auto;
+  padding: 0.75rem 1.5rem;
+  background-color: #735557;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.load-more-btn:hover {
+  background-color: #5c4345;
+}
+
+.delete-btn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: crimson;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: darkred;
+}
+
+/* ===================== LOGIN / REGISTER ===================== */
+.login-page,
+.login-container {
+  max-width: 400px;
+  margin: 4rem auto;
+  padding: 2rem;
+  border-radius: 12px;
+  background: #3a2c2d;
+  box-shadow: 0 0 10px #735557;
+}
+
+.login-page input,
+.login-form input {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #1f1c1c;
+  color: white;
+}
+
+.login-form label {
+  margin-top: 1rem;
+  display: block;
+}
+
+.login-button {
+  width: 100%;
+  background-color: #735557;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  background-color: #5c4345;
+}
+
+.register-link {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* ===================== PASSWORD TOGGLE ===================== */
+.password-toggle {
+  position: relative;
+}
+
+.password-toggle input {
+  padding-right: 2.5rem;
+}
+
+.password-toggle-button {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+}
+
+/* ===================== SAVED PAGE ===================== */
+.saved-page {
+  padding: 2rem;
+  min-height: 100vh;
+  background-color: #1f1c1c;
+  color: #ffffff;
+}
+
+.saved-page .title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #ffdee0;
+}
+
+.saved-page .card {
+  background-color: #3a2c2d;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #735557;
+  text-align: center;
+  box-shadow: 0 0 10px #735557;
+  max-width: 600px;
+  margin-inline: auto;
+}
+
+/* ===================== ABOUT PAGE ===================== */
+.about-page {
+  padding: 4rem 2rem;
+  text-align: center;
+  background-color: #1f1c1c;
+}
+
+.about-page h2 {
+  font-size: 2rem;
+  color: #ffdee0;
+  margin-bottom: 1rem;
+}
+
+.about-page p {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: #e0e0e0;
+}
+
+/* ===================== ADD PAGE ===================== */
+.add-page {
+  padding: 3rem 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #1f1c1c;
+  color: #fff;
+  border-radius: 12px;
+}
+
+.add-page .title {
+  text-align: center;
+  font-size: 1.75rem;
+  color: #ffeaea;
+  margin-bottom: 2rem;
+}
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.add-form label {
+  font-weight: bold;
+}
+
+.add-form textarea,
+.add-form input[type="file"] {
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #2c2c2c;
+  color: white;
+}
+
+.add-form button {
+  padding: 0.75rem 1rem;
+  background-color: #735557;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-form button:hover {
+  background-color: #5c4345;
+}
+
+
+/* ===================== NOTIFIKASI BUTTON ===================== */
+
+
+#subscribe-push-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #fff;
+  background-color: #735557;
+  transition: background 0.3s, color 0.3s;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+  height: 40px;
+  margin: 0 0.5rem 0 0;
+  /* Agar vertikal center dengan link logout */
+}
+
+@media screen and (max-width: 991px) {
+  #subscribe-push-btn {
+    width: 100%;
+    margin: 0.5rem 0 0.5rem 0;
+    justify-content: center;
+    font-size: 1.1rem;
+    height: 44px;
+    box-sizing: border-box;
+  }
+  .nav-list li {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+#subscribe-push-btn.active {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+#subscribe-push-btn:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.nav-list li {
+  display: flex;
+  align-items: center;
+}
+
+/* ===================== MEDIA QUERIES ===================== */
+@media screen and (max-width: 991px) {
+  /* Show hamburger button on tablet/mobile */
+  .drawer-button {
+    display: block;
+  }
+
+  /* Navigation drawer styles */
+  .navigation-drawer {
+    display: none;
+    position: absolute;
+    top: 90px;
+    left: 0;
+    width: 100vw;
+    max-height: 0;
+    overflow: hidden;
+    background-color: #2a2a2a;
+    flex-direction: column;
+    transition: max-height 0.3s ease-in-out;
+    z-index: 1000;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    padding: 0 0 1rem 0;
+  }
+
+  .navigation-drawer.open {
+    display: flex;
+    max-height: 600px;
+    animation: slideDownDrawer 0.3s;
+  }
+
+  @keyframes slideDownDrawer {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    padding: 1rem 0;
+  }
+
+  .nav-list li {
+    width: 100%;
+    text-align: left;
+  }
+
+  .nav-list li a {
+    width: 100%;
+    display: block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+  }
+
+  /* Make header padding smaller */
+  .main-header {
+    padding-block: 1rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    width: 100vw;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .drawer-button {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    transform: none;
+    z-index: 1100;
+  }
+
+  .brand-name {
+    position: relative;
+    z-index: 1100;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .navigation-drawer {
+    display: flex !important;
+    position: static;
+    max-height: none !important;
+    flex-direction: row;
+    background-color: transparent;
+    padding: 0;
+    height: auto;
+  }
+
+  .drawer-button {
+    display: none;
+  }
+
+  .nav-list {
+    flex-direction: row;
+    gap: 30px;
+  }
+}
+
+/* ===================== NAVBAR ===================== */
+.navbar {
+  background-color: #735557;
+  color: white;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  position: relative;
+  z-index: 1001;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar .logo i {
+  color: #fff;
+}
+
+/* Hide the checkbox input visually */
+.menu-toggle {
+  display: none;
+}
+
+/* Hamburger icon */
+.menu-icon {
+  display: none;
+  font-size: 1.8rem;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Navigation links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin-left: auto;
+}
+
+.nav-links li a {
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover,
+.nav-links li a:focus,
+.nav-links li a[aria-current='page'] {
+  color: #ffdee0;
+  text-decoration: underline;
+  outline: none;
+}
+
+/* ===================== RESPONSIVE NAVBAR ===================== */
+@media screen and (max-width: 768px) {
+  /* Show hamburger icon */
+  .menu-icon {
+    display: block;
+    margin-left: auto;
+  }
+
+  /* Hide nav-links by default */
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #2a2a2a;
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+
+  /* Show nav-links when menu-toggle is checked */
+  .menu-toggle:checked + .menu-icon + .nav-links {
+    max-height: 500px; /* cukup besar untuk muat semua link */
+    padding: 1rem 0;
+  }
+
+  .nav-links li {
+    margin: 0 1.5rem;
+  }
+
+  .nav-links li a {
+    padding: 0.75rem 0;
+    font-size: 1.1rem;
+  }
+}
+

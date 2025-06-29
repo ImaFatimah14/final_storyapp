@@ -1,0 +1,45 @@
+<!doctype html><html lang="id"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>StoryApp</title><link rel="shortcut icon" href="favicon.png"/><link rel="icon" href="icons/icon-192x192.png"/><link rel="manifest" href="manifest.json"/><meta name="theme-color" content="#735557"/><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/><script defer="defer" src="/app.bundle.js"></script><link href="/app.css" rel="stylesheet"></head><body><a href="#main-content" class="skip-link">Lewati ke konten utama</a><header><div class="main-header container"><a href="#/" class="brand-name" aria-label="Beranda StoryApp"><i class="fas fa-book-open" aria-hidden="true"></i> StoryApp</a><nav id="navigation-drawer" class="navigation-drawer" aria-label="Navigasi utama"><ul id="nav-list" class="nav-list"></ul></nav><button id="drawer-button" class="drawer-button" aria-label="Tombol menu navigasi" aria-expanded="false" aria-controls="navigation-drawer">☰</button></div></header><main id="main-content" class="main-content" tabindex="-1"></main><noscript><p style="text-align:center; padding: 1rem; background-color: #ffdddd; color: #333;">Aplikasi ini memerlukan JavaScript untuk berfungsi dengan baik.</p></noscript><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script>function isUserLoggedIn() {
+      return !!localStorage.getItem('token');
+    }
+
+    function logout() {
+      localStorage.removeItem('token');
+      window.location.href = '#/login';
+    }
+
+    function renderNavbar() {
+      const nav = document.getElementById('nav-list');
+      if (!nav) return;
+
+      const isLoggedIn = isUserLoggedIn();
+      nav.innerHTML = isLoggedIn
+        ? `
+          <li><a href="#/home"><i class="fas fa-home"></i> Beranda</a></li>
+          <li><a href="#/tambah"><i class="fas fa-plus"></i> Tambah Cerita</a></li>
+          <li><a href="#/saved"><i class="fas fa-bookmark"></i> Tersimpan</a></li>
+          <li><a href="#/about"><i class="fas fa-info-circle"></i> Tentang</a></li>
+          <li style="display: flex; align-items: center; gap: 0.5rem;">
+            <button id="subscribe-push-btn" aria-label="Aktifkan/Nonaktifkan Notifikasi" style="margin-right: 0.5rem;">
+              🔔 Notifikasi
+            </button>
+            <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </li>
+        `
+        : `
+          <li><a href="#/about"><i class="fas fa-info-circle"></i> Tentang</a></li>
+          <li><a href="#/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+          <li><a href="#/register"><i class="fas fa-user-plus"></i> Register</a></li>
+        `;
+
+      const logoutLink = document.getElementById('logout-link');
+      if (logoutLink) {
+        logoutLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          logout();
+          renderNavbar();
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', renderNavbar);
+    window.addEventListener('hashchange', renderNavbar);</script></body></html>
