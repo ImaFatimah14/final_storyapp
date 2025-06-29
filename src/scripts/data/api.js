@@ -91,6 +91,7 @@ import Auth from '../utils/auth';
 export async function subscribePushNotification({ endpoint, keys }) {
   try {
     const token = Auth.getToken();
+    // Endpoint API backend sudah benar, tidak perlu validasi endpoint FCM di sini
     const response = await fetch(ENDPOINTS.SUBSCRIBE, {
       method: 'POST',
       headers: {
