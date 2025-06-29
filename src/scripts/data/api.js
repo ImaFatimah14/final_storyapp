@@ -97,7 +97,7 @@ export async function subscribePushNotification({ endpoint, keys }) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ endpoint, keys }),
+      body: JSON.stringify({ endpoint, expirationTime, keys }),
     });
     return await response.json();
   } catch (error) {
