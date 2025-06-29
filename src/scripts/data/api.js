@@ -91,14 +91,20 @@ import Auth from '../utils/auth';
 export async function subscribePushNotification({ endpoint, keys }) {
   try {
     const token = Auth.getToken();
-    // Endpoint API backend sudah benar, tidak perlu validasi endpoint FCM di sini
+    if (!token) {
+      return { ok: false, message: 'Token tidak ditemukan. Silakan login ulang.' };
+    }
+    // Pastikan payload hanya mengirim endpoint dan keys jika expirationTime null
+    const payload = expirationTime !== null
+      ? { endpoint, expirationTime, keys }
+      : { endpoint, keys };
     const response = await fetch(ENDPOINTS.SUBSCRIBE, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ endpoint, expirationTime, keys }),
+      body: JSON.stringify(payload),
     });
     return await response.json();
   } catch (error) {
