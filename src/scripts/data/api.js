@@ -88,23 +88,24 @@ export const postStory = async (token, { file, description, lat, lon }) => {
 // Push Notification Subscription
 import Auth from '../utils/auth';
 
-export async function subscribePushNotification({ endpoint, keys }) {
+export async function subscribePushNotification({ endpoint, keys, expirationTime = null }) {
   try {
     const token = Auth.getToken();
     if (!token) {
       return { ok: false, message: 'Token tidak ditemukan. Silakan login ulang.' };
     }
-    // Pastikan payload hanya mengirim endpoint dan keys jika expirationTime null
-    const payload = expirationTime !== null
-      ? { endpoint, expirationTime, keys }
-      : { endpoint, keys };
+    const body = { endpoint, keys };
+    // Only add expirationTime if it is not undefined
+    if (typeof expirationTime !== 'undefined') {
+      body.expirationTime = expirationTime;
+    }
     const response = await fetch(ENDPOINTS.SUBSCRIBE, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(body),
     });
     return await response.json();
   } catch (error) {
