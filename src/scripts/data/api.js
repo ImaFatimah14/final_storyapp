@@ -86,11 +86,17 @@ export const postStory = async (token, { file, description, lat, lon }) => {
 };
 
 // Push Notification Subscription
+import Auth from '../utils/auth';
+
 export async function subscribePushNotification({ endpoint, keys }) {
   try {
+    const token = Auth.getToken();
     const response = await fetch(ENDPOINTS.SUBSCRIBE, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({ endpoint, keys }),
     });
     return await response.json();
@@ -101,9 +107,13 @@ export async function subscribePushNotification({ endpoint, keys }) {
 
 export async function unsubscribePushNotification({ endpoint }) {
   try {
+    const token = Auth.getToken();
     const response = await fetch(ENDPOINTS.UNSUBSCRIBE, {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({ endpoint }),
     });
     return await response.json();
